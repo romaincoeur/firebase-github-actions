@@ -22,10 +22,19 @@ be retrieve Firebase web interface: Authentication > Users > options > Password 
 ## Example usage
 
 ```yaml
-uses: romaincoeur/firebase-github-actions/copy-auth@master
-with:
-  source-project: 'project-prod'
-  destination-project: 'project-staging'
-env:
-  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-  BASE64_SIGNER_KEY: ${{ secrets.BASE64_SIGNER_KEY }}
+move-auth:
+    name: Clone Firebase Authentication users into staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Copy auth users
+        uses: romaincoeur/firebase-github-actions/copy-auth@master
+        with:
+          source-project: 'project-prod'
+          destination-project: 'project-staging'
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          BASE64_SIGNER_KEY: ${{ secrets.BASE64_SIGNER_KEY }}
