@@ -1,6 +1,8 @@
 # Container image that runs your code
 FROM alpine:3.10
 
+RUN npm install -g firebase-tools
+
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
 
