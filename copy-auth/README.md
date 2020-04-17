@@ -25,7 +25,6 @@ be retrieve Firebase web interface: Authentication > Users > options > Password 
 move-auth:
     name: Clone Firebase Authentication users into staging
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
 
     steps:
       - name: Checkout the repository
@@ -38,3 +37,4 @@ move-auth:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           BASE64_SIGNER_KEY: ${{ secrets.BASE64_SIGNER_KEY }}
+```
