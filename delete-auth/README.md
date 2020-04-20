@@ -6,7 +6,7 @@ This action removes every users from Firebase Authentication
 
 * `PROJECT_ID` - **Required** The id of the Firebase project
 * `CLIENT_EMAIL` - **Required** From Service account json file
-* `GCP_SA_KEY` - **Required** From Service account json file and base64 encoded
+* `GCP_SA_KEY` - **Required** From Service account json file (private_key field) and base64 encoded
 
 ## Example usage
 
