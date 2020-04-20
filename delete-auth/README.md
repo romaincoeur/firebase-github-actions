@@ -8,6 +8,10 @@ This action removes every users from Firebase Authentication
 * `CLIENT_EMAIL` - **Required** From Service account json file
 * `GCP_SA_KEY` - **Required** From Service account json file (private_key field) and base64 encoded
 
+```bash
+echo "<private_key>" | base64
+```
+
 ## Example usage
 
 ```yaml

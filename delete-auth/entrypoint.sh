@@ -9,7 +9,6 @@ if [ -n "$GCP_SA_KEY" ]; then
   echo "Storing GCP_SA_KEY in /opt/gcp_key.json"
   echo "$GCP_SA_KEY" | base64 --decode > /opt/gcp_key.json
   echo "Exporting GOOGLE_APPLICATION_CREDENTIALS=/opt/gcp_key.json"
-  cat /opt/gcp_key.json
   export GOOGLE_APPLICATION_CREDENTIALS=$(cat /opt/gcp_key.json)
 fi
 
