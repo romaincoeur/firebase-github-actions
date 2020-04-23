@@ -1,0 +1,6 @@
+# action.yml
+name: 'Firebase - Migrate Custom Claims'
+description: 'Moves all Firebase Authentication Custom Claims from a project to another'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
