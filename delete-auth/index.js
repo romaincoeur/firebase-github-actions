@@ -12,11 +12,19 @@ admin.initializeApp({
 module.exports.clearAuth = async function() {
 
   const listUsersResult = await admin.auth().listUsers(1000)
-  console.log('user to be removed ', listUsersResult.users.length)
+  console.log('users to be removed ', listUsersResult.users.length)
 
-  for (const userRecord of listUsersResult.users) {
-    await admin.auth().deleteUser(userRecord.uid)
-  }
+  admin.auth().deleteUsers(listUsersResult.users)
+    .then(function(deleteUsersResult) {
+      console.log('Successfully deleted ' + deleteUsersResult.successCount + ' users')
+      console.log('Failed to delete ' +  deleteUsersResult.failureCount + ' users')
+      deleteUsersResult.errors.forEach(function(err) {
+        console.log(err.error.toJSON());
+      })
+    })
+    .catch(function(error) {
+      console.log('Error deleting users:', error)
+    })
 
   console.log('Done')
   process.exit(0)
