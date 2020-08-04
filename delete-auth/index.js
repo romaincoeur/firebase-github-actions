@@ -14,19 +14,17 @@ module.exports.clearAuth = async function() {
   const listUsersResult = await admin.auth().listUsers(1000)
   console.log('users to be removed ', listUsersResult.users.length)
 
-  admin.auth().deleteUsers(listUsersResult.users.map(u => u.uid))
+  return admin.auth().deleteUsers(listUsersResult.users.map(u => u.uid))
     .then(function(deleteUsersResult) {
       console.log('Successfully deleted ' + deleteUsersResult.successCount + ' users')
       console.log('Failed to delete ' +  deleteUsersResult.failureCount + ' users')
       deleteUsersResult.errors.forEach(function(err) {
         console.log(err.error.toJSON());
       })
+      process.exit(0)
     })
     .catch(function(error) {
       console.log('Error deleting users:', error)
+      process.exit(1)
     })
-
-  console.log('Done')
-  process.exit(0)
-  return true
 }
