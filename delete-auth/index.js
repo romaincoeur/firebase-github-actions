@@ -9,22 +9,22 @@ admin.initializeApp({
 })
 
 // node -e 'require("./index").clearAuth(<projectId>)'
-module.exports.clearAuth = async function() {
-
-  const listUsersResult = await admin.auth().listUsers(1000)
+const clearAuth = async function(nextPageToken) {
+  const listUsersResult = await admin.auth().listUsers(1000, nextPageToken)
   console.log('users to be removed ', listUsersResult.users.length)
-
-  return admin.auth().deleteUsers(listUsersResult.users.map(u => u.uid))
-    .then(function(deleteUsersResult) {
-      console.log('Successfully deleted ' + deleteUsersResult.successCount + ' users')
-      console.log('Failed to delete ' +  deleteUsersResult.failureCount + ' users')
-      deleteUsersResult.errors.forEach(function(err) {
-        console.log(err.error.toJSON());
-      })
-      process.exit(0)
+  try {
+    const deleteUsersResult = await admin.auth().deleteUsers(listUsersResult.users.map(u => u.uid))
+    console.log('Successfully deleted ' + deleteUsersResult.successCount + ' users')
+    console.log('Failed to delete ' +  deleteUsersResult.failureCount + ' users')
+    deleteUsersResult.errors.forEach(function(err) {
+      console.log(err.error.toJSON())
     })
-    .catch(function(error) {
-      console.log('Error deleting users:', error)
-      process.exit(1)
-    })
+    if (listUsersResult.pageToken) await clearAuth(listUsersResult.pageToken)
+    else process.exit(0)
+  }
+  catch(error) {
+    console.log('Error deleting users:', error)
+    process.exit(1)
+  }
 }
+module.exports.clearAuth = clearAuth
