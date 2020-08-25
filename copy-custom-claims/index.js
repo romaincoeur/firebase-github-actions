@@ -13,11 +13,14 @@ const migrateAllUsers = async (nextPageToken, count=0) => {
   for (const userRecord of listUsersResult.users) {
     try {
       await to.auth().setCustomUserClaims(userRecord.uid, userRecord.customClaims)
-      process.stdout.write(`${count++}\r`)
+      count++
+      !process.env.CI && process.stdout.write(`${count}\r`)
     }
     catch(error) {
-      if (userRecord.customClaims) // Ignore error for Anonymous users without custom claims
-        throw new Error('Error writing custom claims for user: ' + userRecord.uid + ' - Error: ' + error.toString())
+      if (userRecord.customClaims) {// Ignore error for Anonymous users without custom claims
+        console.error('Error writing custom claims for user: ' + userRecord.uid + ' - Error: ' + error.toString())
+        process.exit(1)
+      }
     }
   }
   if (listUsersResult.pageToken) {
