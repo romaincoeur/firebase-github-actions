@@ -1,0 +1,6 @@
+# action.yml
+name: 'Firebase - Lock Firestore'
+description: 'Disable all write accesses to a given firestore project'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
