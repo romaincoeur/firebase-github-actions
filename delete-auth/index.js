@@ -1,5 +1,9 @@
 var admin = require("firebase-admin")
 
+console.log('projectId', process.env.PROJECT_ID)
+console.log('clientEmail', process.env.CLIENT_EMAIL)
+console.log('private_key', process.env.GOOGLE_APPLICATION_CREDENTIALS.replace(/\\n/g, '\n'))
+
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.PROJECT_ID,
